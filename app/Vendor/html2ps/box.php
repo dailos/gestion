@@ -88,20 +88,25 @@ function _fix_display_position_float(&$css_state) {
 }
 
 function &create_pdf_box(&$root, &$pipeline) {
-  switch ($root->node_type()) {
-  case XML_DOCUMENT_NODE:
-    // TODO: some magic from traverse_dom_tree
-    $box =& create_document_box($root, $pipeline);
-    return $box;
-  case XML_ELEMENT_NODE:   
-    $box =& create_node_box($root, $pipeline);
-    return $box;
-  case XML_TEXT_NODE:
-    $box =& create_text_box($root, $pipeline);
-    return $box;
-  default:
-    die("Unsupported node type:".$root->node_type());
-  }  
+  // we must to be sure that first element is object 
+  if (is_object($root)) {
+    switch ($root->node_type()) {
+    case XML_DOCUMENT_NODE:
+      // TODO: some magic from traverse_dom_tree
+      $box =& create_document_box($root, $pipeline);
+      return $box;
+    case XML_ELEMENT_NODE:   
+      $box =& create_node_box($root, $pipeline);
+      return $box;
+    case XML_TEXT_NODE:
+      $box =& create_text_box($root, $pipeline);
+      return $box;
+    default:
+      die("unsupported node type:".$root->node_type());
+    }
+  } else {
+    die("node object expected, none object resived (".__FILE__.":".__LINE__.")");
+  } 
 }
 
 function &create_document_box(&$root, &$pipeline) {
@@ -138,15 +143,8 @@ function &create_node_box(&$root, &$pipeline) {
   $css->apply($root, $css_state, $pipeline);
 
   // values from 'style' attribute
-  if ($root->has_attribute('style')) {     
-    $css_processor =& new CSSProcessor(); 
-    $css_processor->set_pipeline($pipeline);
-
-    $style = $root->get_attribute('style');
-    $property_collection = $css_processor->import_source_ruleset($style, 
-                                                                 $pipeline->get_base_url());
-
-    $property_collection->apply($css_state);
+  if ($root->has_attribute("style")) { 
+    parse_style_attr($root, $css_state, $pipeline); 
   };
     
   _fix_tag_display($default_display, $css_state, $pipeline);

@@ -17,6 +17,7 @@
 <li><a href="#nooutput">No output at all. Broken output.</a>
 <ul>
 <li><a href="#nooutput-regexp">I'm getting "Warning: DOMDocument::loadXML() [function.DOMDocument-loadXML]: Empty string supplied as input" error message in PHP 5.2.0</a></li>
+<li><a href="#nooutput-utf8">Warning: DOMDocument::loadXML() [function.DOMDocument-loadXML]: Input is not proper UTF-8, indicate encoding .... </a></li>
 <li><a href="#nooutput-php442">HTML2PS returns blank page. There's some strange messages in PHP error log&hellip;</a></li>
 <li><a href="#nooutput-memory">All I'm getting is a blank page; no error messages in PHP error log. Whats happened?</a></li>
 <li><a href="#nooutput-memory2">I got the following error message: <tt>Fatal error: Allowed memory size of &hellip; bytes exhausted (tried to allocate &hellip; bytes) in&hellip</tt></a></li>
@@ -111,6 +112,10 @@ Using PHP from the command line</a>
 <dd>A new configuration parameter <tt>pcre.backtrack_limit</tt> was introduced in PHP 5.2.0. html2ps does the excessive
 regexp usage; it is recommended to increase pcre.backtrack_limit value to 1000000. 
 </dd>
+
+<dt id="nooutput-utf8">Warning: DOMDocument::loadXML() [function.DOMDocument-loadXML]: Input is not proper UTF-8, indicate encoding ....</dt>
+<dd>The page you're trying to convert specifies UTF8 encoding in header / meta tag, but is face uses different encoding. You need 
+to switch from "Autodetect" encoding to the real one (in most cases iso-8859-1 will do) if you want to convert such page.</dd>
 
 <dt id="nooutput-php442">HTML2PS returns blank page. There's some strange messages in PHP error log, for example:
 <pre>
@@ -252,7 +257,7 @@ PreTreeFilterHeaderFooter filter in API</li>
 <li>Use <a href="compatibility.css.3.html#marginboxes">CSS 3 margin boxes</a>.</li>
 </ul>
 Note that when you use PreTreeFilterHeaderFooter or Header/Footer fields in web interface,
-content is implicitly placed in fixed-positioned div; you may thing of this as follows:
+content is implicitly placed in fixed-positioned div; you may think of this as follows:
 <pre>
 ...
 &lt;body&gt;
@@ -268,6 +273,10 @@ your HTML content
 &lt;/body&gt;
 ...
 </pre>
+<p><strong>Important note:</strong> HTML code added via PreTreeFilterHeaderFooter should be (almost) valid XHTML 
+(see <a href="http://www.w3.org/TR/xhtml1/#diffs">XHTML 1.0: Differences with HTML 4</a>); 
+in particular, all tags / attributes should be in lower case. <em>Almost</em> means that you don't need to specify
+wrapping <tt>html</tt>, <tt>head</tt> and <tt>body</tt> tags for the header content.</p>
 </dd>
 
 <dt><a name="hide-headers">I've added headers and footers to my HTML pages, but how I can prevent them from showing up in the browser?</a></dt>

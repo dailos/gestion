@@ -58,10 +58,11 @@ class IFrameBox extends InlineBlockBox {
     // Save current stylesheet, as each frame may load its own stylesheets
     //
     $pipeline->push_css();
-    $pipeline->scan_styles($tree);
+    $css =& $pipeline->get_current_css();
+    $css->scan_styles($tree, $pipeline);
 
-    $box_child =& DOMBuilder::build($tree, $pipeline);
-
+    $frame_root = traverse_dom_tree_pdf($tree);
+    $box_child =& create_pdf_box($frame_root, $pipeline);
     $this->add_child($box_child);
 
     // Restore old stylesheet

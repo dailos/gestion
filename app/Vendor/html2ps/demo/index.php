@@ -1,12 +1,6 @@
 <?php
 // $Header: /cvsroot/html2ps/demo/index.php,v 1.5 2007/05/06 18:49:30 Konstantin Exp $
-/* remarked out for testing at halfadot
-   unknown if these included elements are needed
-  require_once('config.inc.php');
-  require_once('media.layout.inc.php');
-  require_once('treebuilder.class.php');
-  parse_config_file('./.html2ps.config');
-*/
+  require_once('../config.inc.php');
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -99,6 +93,10 @@ input,textarea,select {
         background-color:#eeeeee;
         border: 1px solid #045564;
 }
+textarea {
+ width: 290px;
+ height: 150px;
+}
 img {
         border:0px;
 }
@@ -148,14 +146,10 @@ div.spacer {
 div.comment {
   line-height: 1.1em;
 }
-
-div.info {
- padding: 5px;
-}
 </style>
 </head>
 <body>
-<h1>html2ps/pdf demo</h1>
+<h1>html2ps/pdf demo (v <?php echo HTML2PS_VERSION_MAJOR ?>.<?php echo HTML2PS_VERSION_MINOR ?>.<?php echo HTML2PS_SUBVERSION ?>)</h1>
 
 <p><a target="_blank" href="http://www.cs.wisc.edu/~ghost/" title="More about GhostView - [new window]">GhostView</a> can be used to read PostScript files, and <a target="_blank"  href="http://www.adobe.com/products/acrobat/readstep2.html" title="Download Adobe Acrobat - [new window]">Adobe Acrobat Reader</a> can be used to read PDF files.</p>
 <p>See also:
@@ -418,36 +412,6 @@ using FPDF and PDFLIB output only.
 </fieldset>
 
 <fieldset>
-<legend>&nbsp;PDF Protection / encryption&nbsp;</legend>
-<div class="info">
-Note that encryption feature is not implemented by some output drivers; 
-currently you may protect your PDF file using FPDF output only.
-</div>
-
-<div class="form-row">
-<label class="hand" for="copy"><span class="labl">Text copying</span></label>
-<span class="formw"><input type="checkbox" name="encryption_copy" value="1"/></span>
-</div>
-
-<div class="form-row">
-<label class="hand" for="copy"><span class="labl">Print</span></label>
-<span class="formw"><input type="checkbox" name="encryption_print" value="1"/></span>
-</div>
-
-<div class="form-row">
-<label class="hand" for="copy"><span class="labl">Modification</span></label>
-<span class="formw"><input type="checkbox" name="encryption_modify" value="1"/></span>
-</div>
-
-<div class="form-row">
-<label class="hand" for="copy"><span class="labl">Annotations / forms</span></label>
-<span class="formw"><input type="checkbox" name="encryption_modify_annotations" value="1"/></span>
-</div>
-
-<div class="spacer"></div><br />
-</fieldset>
-
-<fieldset>
 <legend>&nbsp;Debugging&nbsp;</legend>
 <div class="form-row">
 <label class="hand" for="pageborder"><span class="labl"><a href="../help/calling.html#pageborder" title="Read description of 'pageborder' parameter">Show page border</a></span></label>
@@ -508,7 +472,7 @@ currently you may protect your PDF file using FPDF output only.
 <option value="1.5">PDF 1.5 (Acrobat Reader 6)</option>
 </select>
 <br/>
-Note: not all output methods support all PDF compatibility levels! 
+Note: not all output methods support all PDF compatibility levels!
 </span>
 </div>
 
@@ -528,8 +492,8 @@ Note: not all output methods support all PDF compatibility levels!
 <input class="nulinp" type="checkbox" id="compr" name="compress" value="1"/>
 Compress output file using GZIP<label for="compr1">&nbsp;&nbsp;</label>
 <div class="comment">
-<span style="color: red;">Don't use this option with PDF output</span>, 
-as Acrobat Reader will treat compressed file as damaged. 
+<span style="color: red;">Don't use this option with PDF output</span>,
+as Acrobat Reader will treat compressed file as damaged.
 </div>
 <br />
 </span>
@@ -563,7 +527,8 @@ as Acrobat Reader will treat compressed file as damaged.
 <p><a target=_blank href="https://www.paypal.com/xclick/business=g8z@yahoo.com&item_name=html2ps+donation&no_shipping=1&currency_code=USD">Donate to the html2ps project</a></p>
 
 <hr/>
-&copy; 2005&ndash;2006 Darren Gates, Konstantin Bournayev 
+&copy; 2005&ndash;2009 Darren Gates, Konstantin Bournayev
+
 
 </body>
 </html>

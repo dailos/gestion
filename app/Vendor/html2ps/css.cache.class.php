@@ -37,11 +37,8 @@ class CSSCache {
     if ($this->_isCached($url)) {
       return $this->_readCached($url);
     } else {
-      // Process
-      $css_processor =& new CSSProcessor(); 
-      $css_processor->set_pipeline($pipeline);
-      $cssruleset = $css_processor->import_source($css, $url);
-
+      $cssruleset = new CSSRuleset();
+      $cssruleset->parse_css($css, $pipeline);
       $this->_putCached($url, $cssruleset);
       return $cssruleset;
     };

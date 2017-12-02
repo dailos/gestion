@@ -14,7 +14,7 @@ class PipelineFactory {
 
 //     if (extension_loaded('curl')) {
 //       require_once(HTML2PS_DIR.'fetcher.url.curl.class.php');
-//       $pipeline->fetchers[] = new FetcherUrlCurl();  
+//       $pipeline->fetchers[] = new FetcherUrlCurl();
 //     } else {
     require_once(HTML2PS_DIR.'fetcher.url.class.php');
     $pipeline->fetchers[] = new FetcherURL();

@@ -88,7 +88,7 @@ class FontTrueType extends Font {
      */
     $widths = array();
     $manager = ManagerEncoding::get();
-    $map = $manager->getEncodingVector($encoding);
+    $map = $manager->get_encoding_vector($encoding);
     foreach ($map as $code => $ucs2) {
       $glyphIndex = $subtable->lookup($ucs2);
       if (!is_null($glyphIndex)) {

@@ -23,7 +23,7 @@ function &parse_css_properties($string, &$pipeline) {
 
     $property =& CSSPropertyDeclaration::create($code, $value, $pipeline);
     if (!is_null($property)) {
-      $property_collection->addProperty($property);
+      $property_collection->add_property($property);
     };
   };
   
@@ -40,7 +40,7 @@ function parse_css_properties_property($string, &$code) {
 
   $name = strtolower(trim($matches[1]));
   $rest = $matches[2];
-  $code = CSS::word2code($name);
+  $code = CSS::name2code($name);
   return $rest;
 }
 

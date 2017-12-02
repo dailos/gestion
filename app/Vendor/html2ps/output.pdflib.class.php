@@ -28,8 +28,7 @@ class OutputDriverPdflib extends OutputDriverGenericPDF {
    function encoding($encoding) {
     $encoding = trim(strtolower($encoding));
 
-    $translations = array(
-                          'iso-8859-1'   => 'winansi',
+    $translations = array('iso-8859-1'   => 'winansi',
                           'iso-8859-2'   => 'iso8859-2',
                           'iso-8859-3'   => 'iso8859-3',
                           'iso-8859-4'   => 'iso8859-4',
@@ -46,8 +45,7 @@ class OutputDriverPdflib extends OutputDriverGenericPDF {
                           'windows-1250' => 'cp1250',
                           'windows-1251' => 'cp1251',
                           'windows-1252' => 'cp1252',
-                          'symbol'       => 'symbol'
-                          );
+                          'symbol'       => 'symbol');
 
     if (isset($translations[$encoding])) { return $translations[$encoding]; };
     return $encoding;
@@ -293,8 +291,18 @@ class OutputDriverPdflib extends OutputDriverGenericPDF {
   function prepare() {
     parent::prepare();
 
-    $filename = $this->generate_cpg('custom', true);
-    pdf_set_parameter($this->pdf, 'Encoding', sprintf('custom=%s', $filename));
+    // Generate custom encoding vector mappings
+    $manager_encoding = ManagerEncoding::get();
+    for ($i = 1, $size = $manager_encoding->get_custom_vector_index(); $i <= $size; $i++) {
+      $encoding_name = $manager_encoding->get_custom_encoding_name($i);
+      $filename = $this->generate_cpg($encoding_name, 
+                                      true);
+      pdf_set_parameter($this->pdf, 
+                        'Encoding',
+                        sprintf('%s=%s',
+                                $encoding_name, 
+                                $filename));
+    };
   }
 
   function reset(&$media) {
@@ -419,14 +427,20 @@ class OutputDriverPdflib extends OutputDriverGenericPDF {
   }
 
   function generate_cpg($encoding, $force = false) {
-    $filename = CACHE_DIR.$encoding.'.cpg';
-    if (file_exists($filename) && !$force) {
+    if (!$force) {
+      $filename = CACHE_DIR.$encoding.'.cpg';
+    } else {
+      $filename = CACHE_DIR.uniqid('', false).'.cpg';
+    };
+
+    if (file_exists($filename)) {
       return $filename;
     };
 
     $output = fopen($filename, 'w');
     $manager_encoding =& ManagerEncoding::get();
-    $vector = $manager_encoding->getEncodingVector($encoding);
+    $vector = $manager_encoding->get_encoding_vector($encoding);
+
     foreach ($vector as $code => $utf) {
       fwrite($output, sprintf("0x%04X 0x%02X\n", $utf, ord($code)));
     };
