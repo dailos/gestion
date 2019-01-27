@@ -60,4 +60,3 @@ class PdfComponent extends Component {
     $this->p->process($url, $this->media); 
   } 
 } 
-?>
