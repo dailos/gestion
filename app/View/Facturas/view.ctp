@@ -10,7 +10,8 @@
 	}else {		
 		echo $this->Html->link($this->Html->image("preview.png",array('title'=>'Previsualizar')), array('action' => 'preview',  $factura['Factura']['id']),array('escape' => false));	
 		echo $this->Html->link($this->Html->image("email.png",array('title'=>'Enviar por email')), array('action' => 'email',  $factura['Factura']['id'],$factura['Proyecto']['Empresa']['email']),array('escape' => false));	
-		echo $this->Html->link($this->Html->image("pdf.png",array('title'=>'Descargar pdf')), array('action' => 'pdf',  $factura['Factura']['id'],md5($factura['Factura']['id'])),array('escape' => false));		
+		//echo $this->Html->link($this->Html->image("pdf.png",array('title'=>'Descargar pdf')), array('action' => 'pdf',  $factura['Factura']['id'],md5($factura['Factura']['id'])),array('escape' => false));
+        echo $this->Html->link($this->Html->image("pdf.png",array('title'=>'Previsualizar')), array('action' => 'preview',  $factura['Factura']['id'], true),array('escape' => false));
 		echo $this->Html->link($this->Html->image('entregada.png',array('title'=>'Marcar como entregada')), array('action' => 'entregada',  $factura['Factura']['id']),array('escape' => false), sprintf('¿Seguro que desea marcar la factura como entregada?'));
 		echo $this->Html->link($this->Html->image('cerrado_action.png',array('title'=>'Abrir')), array( 'action' => 'abrir',$factura['Factura']['id']), array( 'escape' => false) );	
 	}
